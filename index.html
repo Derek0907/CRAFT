@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="CRAFT: Learning Object-Centric Motion Abstractions for Human-to-Robot Skill Transfer. Structured motion abstractions extracted from human demonstrations, predicted from RGB-D observations and executed on a real robot.">
+  <meta name="keywords" content="CRAFT, motion abstraction, human-to-robot skill transfer, learning from human videos, object-centric motion representation, robot manipulation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CRAFT: Learning Object-Centric Motion Abstractions for Human-to-Robot Skill Transfer</title>
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script defer src="./static/js/bulma-carousel.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
+</head>
+<body>
+<!-- Icons: Font Awesome Free 5.15.1 (https://fontawesome.com), CC BY 4.0. -->
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">CRAFT: Learning Object-Centric Motion Abstractions for Human-to-Robot Skill Transfer</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a class="no-link">Zichen Zhang</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://xuji-zhang.netlify.app">Xuji Zhang</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=UI5_qZcAAAAJ&amp;hl=en">Wei Zhai</a><sup>1</sup>,</span>
+            <span class="author-block"><a class="no-link">Jian Di</a><sup>1</sup>,</span>
+            <span class="author-block"><a class="no-link">Kun Li</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=K7rTHNcAAAAJ&amp;hl=en">Yang Cao</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=MSo3KHMAAAAJ&amp;hl=en">Wenjun Lv</a><sup>1</sup></span>
+          </div>
+          <div class="is-size-6 publication-authors" style="margin-top: 0.5rem;">
+            <span class="author-block"><sup>1</sup>University of Science and Technology of China</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block"><a class="external-link button is-normal is-rounded is-dark" title="The arXiv version will be linked here"><span class="icon"><svg class="fa-inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48zm250.2-143.7c-12.2-12-47-8.7-64.4-6.5-17.2-10.5-28.7-25-36.8-46.3 3.9-16.1 10.1-40.6 5.4-56-4.2-26.2-37.8-23.6-42.6-5.9-4.4 16.1-.4 38.5 7 67.1-10 23.9-24.9 56-35.4 74.4-20 10.3-47 26.2-51 46.2-3.3 15.8 26 55.2 76.1-31.2 22.4-7.4 46.8-16.5 68.4-20.1 18.9 10.2 41 17 55.8 17 25.5 0 28-28.2 17.5-38.7zm-198.1 77.8c5.1-13.7 24.5-29.5 30.4-35-19 30.3-30.4 35.7-30.4 35zm81.6-190.6c7.4 0 6.7 32.1 1.8 40.8-4.4-13.9-4.3-40.8-1.8-40.8zm-24.4 136.6c9.7-16.9 18-37 24.7-54.7 8.3 15.1 18.9 27.2 30.1 35.5-20.8 4.3-38.9 13.1-54.8 19.2zm131.6-5s-5 6-37.3-7.8c35.1-2.6 40.9 5.4 37.3 7.8z"/></svg></span><span>arXiv <span class="soon">(coming soon)</span></span></a></span>
+              <span class="link-block"><a class="external-link button is-normal is-rounded is-dark" title="The code will be released"><span class="icon"><svg class="fa-inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span><span>Code <span class="soon">(coming soon)</span></span></a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/teaser.jpg" alt="Intermediate representations for human-to-robot skill transfer" style="width: 100%;">
+      <p class="figure-caption">
+        <b>Intermediate representations for human-to-robot skill transfer.</b> Dense Flow contains redundant
+        trajectories, while both Dense Flow and Keypoint Trajectories exhibit trajectory jitter and low cross-actor
+        consistency. In contrast, CRAFT extracts compact, cross-actor-consistent motion abstractions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+          <div class="item">
+            <video poster="./static/videos/01_open_cupboard.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Open Cupboard">
+              <source src="./static/videos/01_open_cupboard.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/02_close_cupboard.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Close Cupboard">
+              <source src="./static/videos/02_close_cupboard.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/03_open_cabinet.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Open Cabinet">
+              <source src="./static/videos/03_open_cabinet.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/04_close_cabinet.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Close Cabinet">
+              <source src="./static/videos/04_close_cabinet.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/06_pull_toy_car.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Pull Toy Car">
+              <source src="./static/videos/06_pull_toy_car.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/05_push_toy_car.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Push Toy Car">
+              <source src="./static/videos/05_push_toy_car.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/08_dump_kettle.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Dump Kettle">
+              <source src="./static/videos/08_dump_kettle.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/07_pick_up_kettle.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Pick up Kettle">
+              <source src="./static/videos/07_pick_up_kettle.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/09_pick_up_mug.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Pick up Mug">
+              <source src="./static/videos/09_pick_up_mug.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/10_putdown_mug.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Putdown Mug">
+              <source src="./static/videos/10_putdown_mug.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/11_carry_banana.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Carry Banana">
+              <source src="./static/videos/11_carry_banana.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/12_putdown_banana.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Putdown Banana">
+              <source src="./static/videos/12_putdown_banana.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/13_pick_up_bottle.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Pick up Bottle">
+              <source src="./static/videos/13_pick_up_bottle.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/14_putdown_bottle.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Putdown Bottle">
+              <source src="./static/videos/14_putdown_bottle.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/16_carry_stapler.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Carry Stapler">
+              <source src="./static/videos/16_carry_stapler.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/15_pick_up_stapler.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Pick up Stapler">
+              <source src="./static/videos/15_pick_up_stapler.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/18_close_laptop.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Close Laptop">
+              <source src="./static/videos/18_close_laptop.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="./static/videos/17_putdown_laptop.jpg" autoplay muted loop playsinline preload="metadata" width="848" height="480" aria-label="Robot execution: Putdown Laptop">
+              <source src="./static/videos/17_putdown_laptop.mp4" type="video/mp4">
+            </video>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Transferring manipulation skills from human demonstrations to robots requires bridging the embodiment gap, yet
+constructing motion features largely independent of execution conditions remains challenging. Existing methods build
+object-centric motion representations but tend to entangle task evidence with task-irrelevant execution variation,
+limiting transfer efficiency. Recognizing that these intertwined signals are driven by distinct factors and thus
+separable, in this paper, we propose Object-Centric Motion Abstractions for Human-to-Robot Skill Transfer
+(<b>CRAFT</b>), which extracts structured representations from object motion through conditioned information
+separation, reducing their dependence on execution style. This design emphasizes task-essential motion, but poses two
+challenges: information disentanglement under task-label-only supervision, and cross-instance structural convergence
+without explicit pairing. To address these, we introduce two mechanisms: the <b>Task-Evidence Bottleneck</b> reduces
+task-irrelevant information through variational compression, and the <b>Source-Time Prototype Constraint</b> aligns
+structure across same-task instances by prototype matching. Furthermore, we predict motion abstractions directly from
+RGB-D observations and use them for robot manipulation. Experiments show that the proposed motion abstraction exhibits
+higher representation quality than existing alternatives. This advantage is also reflected in real-robot execution:
+across 23 object&ndash;action combinations, it achieves a success rate of 83.5%, compared with 64.3% for Dense Flow
+and 66.5% for Keypoint Trajectories, demonstrating its utility for human-to-robot skill transfer.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Real-Robot Executions</h2>
+        <h3 class="subtitle demo-intro">
+          For 18 object&ndash;action combinations, we provide a video of the robot execution.<br>
+          The predictor is trained <b>only on human videos</b>, with <b>no fine-tuning on robot data</b>; the initial grasp is given.<br>
+          The playback speed is shown in each video.
+        </h3>
+        <div class="demo-select">
+          Video demo for
+          <div class="select is-small is-rounded">
+            <select id="demo-object" aria-label="Object">
+                <option value="Cupboard" selected>Cupboard</option>
+                <option value="Cabinet">Cabinet</option>
+                <option value="Toy Car">Toy Car</option>
+                <option value="Kettle">Kettle</option>
+                <option value="Mug">Mug</option>
+                <option value="Banana">Banana</option>
+                <option value="Bottle">Bottle</option>
+                <option value="Stapler">Stapler</option>
+                <option value="Laptop">Laptop</option>
+            </select>
+          </div>
+        </div>
+        <div class="video-grid">
+          <div class="video">
+            <video id="demo-video-1" controls autoplay loop muted playsinline poster="./static/videos/01_open_cupboard.jpg">
+              <source src="./static/videos/01_open_cupboard.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption" id="demo-caption-1">Open Cupboard</p>
+          </div>
+          <div class="video">
+            <video id="demo-video-2" controls autoplay loop muted playsinline poster="./static/videos/02_close_cupboard.jpg">
+              <source src="./static/videos/02_close_cupboard.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption" id="demo-caption-2">Close Cupboard</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script id="demo-data" type="application/json">{"Cupboard": [{"file": "01_open_cupboard.mp4", "poster": "01_open_cupboard.jpg", "label": "Open Cupboard"}, {"file": "02_close_cupboard.mp4", "poster": "02_close_cupboard.jpg", "label": "Close Cupboard"}], "Cabinet": [{"file": "03_open_cabinet.mp4", "poster": "03_open_cabinet.jpg", "label": "Open Cabinet"}, {"file": "04_close_cabinet.mp4", "poster": "04_close_cabinet.jpg", "label": "Close Cabinet"}], "Toy Car": [{"file": "06_pull_toy_car.mp4", "poster": "06_pull_toy_car.jpg", "label": "Pull Toy Car"}, {"file": "05_push_toy_car.mp4", "poster": "05_push_toy_car.jpg", "label": "Push Toy Car"}], "Kettle": [{"file": "08_dump_kettle.mp4", "poster": "08_dump_kettle.jpg", "label": "Dump Kettle"}, {"file": "07_pick_up_kettle.mp4", "poster": "07_pick_up_kettle.jpg", "label": "Pick up Kettle"}], "Mug": [{"file": "09_pick_up_mug.mp4", "poster": "09_pick_up_mug.jpg", "label": "Pick up Mug"}, {"file": "10_putdown_mug.mp4", "poster": "10_putdown_mug.jpg", "label": "Putdown Mug"}], "Banana": [{"file": "11_carry_banana.mp4", "poster": "11_carry_banana.jpg", "label": "Carry Banana"}, {"file": "12_putdown_banana.mp4", "poster": "12_putdown_banana.jpg", "label": "Putdown Banana"}], "Bottle": [{"file": "13_pick_up_bottle.mp4", "poster": "13_pick_up_bottle.jpg", "label": "Pick up Bottle"}, {"file": "14_putdown_bottle.mp4", "poster": "14_putdown_bottle.jpg", "label": "Putdown Bottle"}], "Stapler": [{"file": "16_carry_stapler.mp4", "poster": "16_carry_stapler.jpg", "label": "Carry Stapler"}, {"file": "15_pick_up_stapler.mp4", "poster": "15_pick_up_stapler.jpg", "label": "Pick up Stapler"}], "Laptop": [{"file": "18_close_laptop.mp4", "poster": "18_close_laptop.jpg", "label": "Close Laptop"}, {"file": "17_putdown_laptop.mp4", "poster": "17_putdown_laptop.jpg", "label": "Putdown Laptop"}]}</script>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            CRAFT has two stages. In <b>Motion Representation Extraction (MRE)</b>, it constructs motion abstractions from
+            human demonstrations: spatial source anchors on the object surface and ordered temporal phases that jointly
+            encode the spatiotemporal structure of the task. In <b>Motion Representation Prediction (MRP)</b>, a model
+            learns to predict them from an RGB-D observation and a task description, and the prediction is executed on
+            the robot.
+          </p>
+        </div>
+        <div class="figure-block">
+          <img src="./static/images/mre_pipeline.png" alt="CRAFT pipeline" style="width: 100%;" loading="lazy">
+        </div>
+        <p class="figure-caption">
+          <b>CRAFT pipeline.</b> The Motion Encoder extracts local and global motion features, which the <b>Task-Evidence
+          Bottleneck</b> filters into a raw motion abstraction. The <b>Source-Time Prototype Constraint</b> then aligns it to its
+          task prototype, producing the final motion abstraction.
+        </p>
+        <div class="figure-block" style="margin-top: 2rem;">
+          <img src="./static/images/mrp_pipeline.png" alt="MRP pipeline" style="width: 50%;" loading="lazy">
+        </div>
+        <p class="figure-caption" style="text-align: center;">
+          <b>MRP pipeline.</b> One model with this architecture is trained per representation, and only the prediction head differs.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Representation Quality</h2>
+        <div class="figure-block">
+          <img src="./static/images/table_representation.png" alt="Representation-quality comparison" style="width: 100%;" loading="lazy">
+        </div>
+        <p class="figure-caption">
+          <b>Representation-quality comparison for MRE.</b> TD, SL, GTA, and TSA denote Task Decodability, Style Leakage,
+          Geometry&ndash;Task Alignment, and Temporal-Structure Alignment. Arrows indicate the preferred direction. Bold marks the
+          best result, and underlining marks the strongest baseline for each metric. Learned methods (right) are means over
+          three training seeds (&plusmn;: std. dev.).
+        </p>
+        <div class="figure-block" style="margin-top: 2rem;">
+          <img src="./static/images/slot_robustness.png" alt="Source-phase slot robustness" style="width: 100%;" loading="lazy">
+        </div>
+        <p class="figure-caption">
+          <b>Source&ndash;phase slot robustness across <i>K</i>&times;<i>P</i> configurations.</b> Outward is better on every axis (SL is
+          reversed); CRAFT encloses Keypoint Trajectories of the same budget in all four configurations.
+        </p>
+        <div class="figure-block" style="margin-top: 2rem;">
+          <img src="./static/images/loao_mre.png" alt="MRE on unseen actors" style="width: 56%;" loading="lazy">
+        </div>
+        <p class="figure-caption" style="text-align: center;">
+          <b>MRE on unseen actors (leave-one-actor-out).</b> SL is undefined with a single test actor; GTA is its task term only.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Predicting Motion Abstractions</h2>
+        <div class="figure-block">
+          <img src="./static/images/mrp_qualitative.jpg" alt="Qualitative MRP results" style="width: 62%;" loading="lazy">
+        </div>
+        <p class="figure-caption" style="text-align: center;">
+          <b>Qualitative MRP results across four manipulation tasks.</b> The predicted source&ndash;phase trajectories are overlaid
+          on the motion-start RGB frames.
+        </p>
+        <div class="figure-block" style="margin-top: 2rem;">
+          <img src="./static/images/table_prediction.png" alt="Prediction quality" style="width: 62%;" loading="lazy">
+        </div>
+        <p class="figure-caption" style="text-align: center;">
+          <b>Prediction quality of the three MRP models.</b> Pt, Pt<sub>O/C</sub>: median point error (cm), all and open/close actions.
+        </p>
+        <div class="figure-block" style="margin-top: 2rem;">
+          <img src="./static/images/loao_mrp.png" alt="MRP on unseen actors" style="width: 62%;" loading="lazy">
+        </div>
+        <p class="figure-caption" style="text-align: center;">
+          <b>MRP on unseen actors (leave-one-actor-out).</b> The motion abstraction has the lowest point error on every actor.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Real-World Experiments</h2>
+        <div class="content has-text-justified">
+          <p>
+            The real-robot setup uses a UFACTORY xArm 7 with a UFACTORY Gripper G2 and an Intel RealSense D435. The evaluation
+            covers 23 object&ndash;action combinations across nine objects, with 10 trials each and object repositioning between
+            trials. The tasks follow HOI4D categories, while the object instances, the scenes, and the robot are unseen by the
+            predictor, which is trained only on human videos with no fine-tuning on robot data.
+          </p>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><div class="num">83.5%</div><div class="lab">success rate with the motion abstraction</div></div>
+          <div class="stat"><div class="num">64.3%</div><div class="lab">with Dense Flow</div></div>
+          <div class="stat"><div class="num">66.5%</div><div class="lab">with Keypoint Trajectories</div></div>
+          <div class="stat"><div class="num">23</div><div class="lab">object&ndash;action combinations, 10 trials each</div></div>
+        </div>
+        <div class="figure-block">
+          <img src="./static/images/table_robot.png" alt="Real-world success rates" style="width: 100%;" loading="lazy">
+        </div>
+        <p class="figure-caption">
+          <b>Real-world success rates across nine objects and 23 object&ndash;action combinations.</b> DF, KT, and MA are Dense Flow,
+          Keypoint Trajectories, and Motion Abstraction; <i>w/o T</i> and <i>w/o S</i> (gray) are MA without TEB and without ST-PTC.
+          Each cell gives successes out of 10 independent trials; bold marks the best of DF, KT, and MA.
+        </p>
+        <div class="figure-block" style="margin-top: 2rem;">
+          <img src="./static/images/robot_execution.jpg" alt="Qualitative real-world executions" style="width: 100%;" loading="lazy">
+        </div>
+        <p class="figure-caption">
+          <b>Qualitative real-world executions driven by predicted motion abstractions.</b> Each column shows one task: the RGB-D
+          input with predicted source&ndash;phase trajectories, initial grasp, and end state from top to bottom.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{zhang2026craft,
+  title   = {CRAFT: Learning Object-Centric Motion Abstractions for Human-to-Robot Skill Transfer},
+  author  = {Zhang, Zichen and Zhang, Xuji and Zhai, Wei and Di, Jian and Li, Kun and Cao, Yang and Lv, Wenjun},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>. The page layout follows the
+            <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> website template.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
